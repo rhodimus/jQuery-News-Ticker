@@ -1,0 +1,125 @@
+#ticker-wrapper * {
+	margin: 0px;
+}
+#ticker-wrapper.has-js {
+	margin: 20px 0px 0px 20px;
+	width: 800px;
+	height: 30px;
+	border: 1px solid #CFCFCF;
+	display: block;
+	font-family: Arial;
+	font-size: 0.75em;
+}
+#ticker {
+	padding: 0px 0px 0px 10px;
+	width: 715px;
+	height: 23px;
+	display: block;
+	float: left;
+	position: relative;
+	overflow: hidden;
+	background-color: #ffffff;
+}
+#ticker-title {
+	padding-top: 7px;
+	float: left; 	
+	color: #990000;
+	font-weight: bold;
+	background-color: #ffffff;
+	text-transform: uppercase;
+}
+#ticker-content {
+	margin: 0px;
+	padding-top: 7px;
+	float: left;
+	position: absolute;
+	color: #1F527B;
+	font-weight: bold;
+	background-color: #ffffff;
+}
+#ticker-content:focus {
+	none;
+}
+#ticker-content A {
+	text-decoration: none;	
+	color: #1F527B;
+}
+#ticker-content A:hover {
+	text-decoration: underline;	
+	color: #0D3059;
+}
+#ticker-swipe {
+	padding-top: 7px;
+	position: absolute;
+	top: 0px;
+	left: 80px;
+	background-color: #ffffff;
+	display: block;
+	width: 800px;
+	height: 23px; 
+}
+#ticker-swipe SPAN {
+	margin-left: 1px;
+	background-color: #ffffff;
+	border-bottom: 1px solid #1F527B;
+	height: 12px;
+	width: 7px;
+	display: block;
+}
+#ticker-controls {
+	padding: 7px 10px 0px 0px;
+	list-style-type: none;
+	float: right;
+}
+#ticker-controls LI {
+	padding: 0px;
+	margin-left: 5px;
+	float: left;
+	cursor: pointer;
+	height: 16px;
+	width: 16px;
+	display: block;
+}
+#ticker-controls LI#play-pause {
+	background-image: url('../images/controls.png');
+	background-position: 32px 16px;
+}
+#ticker-controls LI#play-pause.over {
+	background-position: 32px 32px;
+}
+#ticker-controls LI#play-pause.down {
+	background-position: 32px 0px;
+}
+#ticker-controls LI#play-pause.paused {
+	background-image: url('../images/controls.png');	
+	background-position: 48px 16px;
+}
+#ticker-controls LI#play-pause.paused.over {
+	background-position: 48px 32px;
+}
+#ticker-controls LI#play-pause.paused.down {
+	background-position: 48px 0px;
+}
+#ticker-controls LI#prev {
+	background-image: url('../images/controls.png');
+	background-position: 0px 16px;		
+}
+#ticker-controls LI#prev.over {
+	background-position: 0px 32px;		
+}
+#ticker-controls LI#prev.down {
+	background-position: 0px 0px;		
+}
+#ticker-controls LI#next {
+	background-image: url('../images/controls.png');	
+	background-position: 16px 16px;	
+}
+#ticker-controls LI#next.over {
+	background-position: 16px 32px;	
+}
+#ticker-controls LI#next.down {	
+	background-position: 16px 0px;	
+}
+.js-hidden {
+	display: none;
+}
