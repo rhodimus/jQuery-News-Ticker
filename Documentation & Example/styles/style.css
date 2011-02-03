@@ -225,7 +225,7 @@ div#content {
 	margin: 20px 0px 20px 0px;
 	padding-left: 20px;
 	width: 780px;
-	height: 30px;
+	height: 32px;
 	display: block;
 	-webkit-border-radius: 15px;
 	-moz-border-radius: 15px;
@@ -243,7 +243,7 @@ div#content {
 	background-color: #f8f0db;
 }
 #ticker-title {
-	padding-top: 7px;
+	padding-top: 9px;
 	float: left; 	
 	color: #990000;
 	font-weight: bold;
@@ -252,7 +252,7 @@ div#content {
 }
 #ticker-content {
 	margin: 0px;
-	padding-top: 7px;
+	padding-top: 9px;
 	float: left;
 	position: absolute;
 	color: #1F527B;
@@ -274,7 +274,7 @@ div#content {
 	color: #0D3059;
 }
 #ticker-swipe {
-	padding-top: 7px;
+	padding-top: 9px;
 	position: absolute;
 	top: 0px;
 	left: 80px;
@@ -292,7 +292,7 @@ div#content {
 	display: block;
 }
 #ticker-controls {
-	padding: 7px 20px 0px 0px;
+	padding: 8px 20px 0px 0px;
 	list-style-type: none;
 	float: right;
 }

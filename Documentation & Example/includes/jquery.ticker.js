@@ -135,16 +135,18 @@
 					// add controls HTML to DOM
 					$(settings.dom.wrapperID).append('<ul id="' + settings.dom.controlsID.replace('#', '') + '"><li id="' + settings.dom.playPauseID.replace('#', '') + '" class="controls"></li><li id="' + settings.dom.prevID.replace('#', '') + '" class="controls"></li><li id="' + settings.dom.nextID.replace('#', '') + '" class="controls"></li></ul>');
 				}
-				// add mouse over on the content
-				$(settings.dom.contentID).mouseover(function () {
-					if (settings.paused == false) {
-						pauseTicker();
-					}
-				}).mouseout(function () {
-					if (settings.paused == false) {
-						restartTicker();
-					}
-				});
+				if (opts.displayType != 'fade') {
+                		// add mouse over on the content
+                		$(settings.dom.contentID).mouseover(function () {
+                			if (settings.paused == false) {
+                				pauseTicker();
+                			}
+                		}).mouseout(function () {
+                			if (settings.paused == false) {
+                				restartTicker();
+                			}
+                		});
+				}
 				
 				// process the content for this ticker
 				processContent();
@@ -204,8 +206,7 @@
 							});							
 						}
 						else {
-							debugError('Code Me!');							
-						}						
+							debugError('Code Me!');							}						
 					}
 					else if (opts.htmlFeed) { 
 						if($(newsID + ' LI').length > 0) {

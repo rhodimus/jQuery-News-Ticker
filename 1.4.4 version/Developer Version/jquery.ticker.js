@@ -135,16 +135,18 @@
 					// add controls HTML to DOM
 					$(settings.dom.wrapperID).append('<ul id="' + settings.dom.controlsID.replace('#', '') + '"><li id="' + settings.dom.playPauseID.replace('#', '') + '" class="controls"></li><li id="' + settings.dom.prevID.replace('#', '') + '" class="controls"></li><li id="' + settings.dom.nextID.replace('#', '') + '" class="controls"></li></ul>');
 				}
-				// add mouse over on the content
-				$(settings.dom.contentID).mouseover(function () {
-					if (settings.paused == false) {
-						pauseTicker();
-					}
-				}).mouseout(function () {
-					if (settings.paused == false) {
-						restartTicker();
-					}
-				});
+				if (opts.displayType != 'fade') {
+                		// add mouse over on the content
+                		$(settings.dom.contentID).mouseover(function () {
+                			if (settings.paused == false) {
+                				pauseTicker();
+                			}
+                		}).mouseout(function () {
+                			if (settings.paused == false) {
+                				restartTicker();
+                			}
+                		});
+				}
 				
 				// process the content for this ticker
 				processContent();
@@ -164,12 +166,8 @@
 								async: true,
 								success: function(data){
 									count = 0;	
-									// get the rss node - this check seems only necessary for IE when served by IIS, otherwise we could get the root node - boo!
-									for (var a = 0; a < data.childNodes.length; a++) {
-										if (data.childNodes[a].nodeName == 'rss') {
-											xmlContent = data.childNodes[a];											
-										}										
-									}
+									// get the 'root' node - we assume here that the first child node is the 'root'
+									xmlContent = data.childNodes[0];
 									// find the channel node
 									for (var i = 0; i < xmlContent.childNodes.length; i++) {
 										if (xmlContent.childNodes[i].nodeName == 'channel') {
