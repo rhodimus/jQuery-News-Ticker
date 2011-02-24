@@ -17,13 +17,13 @@
 		// Note that the first arg to extend is an empty object -
 		// this is to keep from overriding our "defaults" object.
 		var opts = $.extend({}, $.fn.ticker.defaults, options); 		
-		
+
 		/* Get the id of the UL to get our news content from */
 		var newsID = '#' + $(this).attr('id');
 
 		/* Get the tag type - we will check this later to makde sure it is a UL tag */
 		var tagType = $(this).attr('tagName'); 	
-		
+
 		return this.each(function() { 
 			/* Internal vars */
 			var settings = {				
@@ -48,7 +48,7 @@
 					playPauseID: '#play-pause'
 				}
 			};
-			
+
 			// if we are not using a UL, display an error message and stop any further execution
 			if (tagType != 'UL' && opts.htmlFeed === true) {
 				debugError('Cannot use <' + tagType.toLowerCase() + '> type of element for this plugin - must of type <ul>');
@@ -65,7 +65,7 @@
 			    }
 			    return size;
 			};
-			
+
 			/* Function for handling debug and error messages */ 
 			function debugError(obj) {
 				if (opts.debugMode) {
@@ -77,11 +77,11 @@
 					}
 				}
 			}	
-			
+
 			/* Function to setup the page */
 			function initialisePage() {
 				// add our HTML structure for the ticker to the DOM
-				$(settings.dom.wrapperID).append('<div id="ticker-icon" class="ticker-icon"></div><div id="' + settings.dom.tickerID.replace('#', '') + '"><div id="' + settings.dom.titleID.replace('#', '') + '"><span style="display: none;"><!-- --></span></div><p id="' + settings.dom.contentID.replace('#', '') + '"></p><div id="' + settings.dom.revealID.replace('#', '') + '"><span style="display: none;"><!-- --></span></div></div>');
+				$(settings.dom.wrapperID).append('<div id="' + settings.dom.tickerID.replace('#', '') + '"><div id="' + settings.dom.titleID.replace('#', '') + '"><span style="display: none;"><!-- --></span></div><p id="' + settings.dom.contentID.replace('#', '') + '"></p><div id="' + settings.dom.revealID.replace('#', '') + '"><span style="display: none;"><!-- --></span></div></div>');
 				$(settings.dom.wrapperID).removeClass('no-js').addClass('has-js');
 				// hide the ticker
 				$(settings.dom.tickerElem + ',' + settings.dom.titleElem + ',' + settings.dom.contentID).hide();
@@ -135,21 +135,23 @@
 					// add controls HTML to DOM
 					$(settings.dom.wrapperID).append('<ul id="' + settings.dom.controlsID.replace('#', '') + '"><li id="' + settings.dom.playPauseID.replace('#', '') + '" class="controls"></li><li id="' + settings.dom.prevID.replace('#', '') + '" class="controls"></li><li id="' + settings.dom.nextID.replace('#', '') + '" class="controls"></li></ul>');
 				}
-				// add mouse over on the content
-				$(settings.dom.contentID).mouseover(function () {
-					if (settings.paused == false) {
-						pauseTicker();
-					}
-				}).mouseout(function () {
-					if (settings.paused == false) {
-						restartTicker();
-					}
-				});
-				
+				if (opts.displayType != 'fade') {
+                		// add mouse over on the content
+                		$(settings.dom.contentID).mouseover(function () {
+                			if (settings.paused == false) {
+                				pauseTicker();
+                			}
+                		}).mouseout(function () {
+                			if (settings.paused == false) {
+                				restartTicker();
+                			}
+                		});
+				}
+
 				// process the content for this ticker
 				processContent();
 			}
-			
+
 			/* Start to process the content for this ticker */
 			function processContent() {	
 				// check to see if we need to load content
@@ -167,9 +169,9 @@
 									// get the 'root' node
 									for (var a = 0; a < data.childNodes.length; a++) {
 										if (data.childNodes[a].nodeName == 'rss') {
-											xmlContent = data.childNodes[a];											
+											xmlContent = data.childNodes[a];
 										}
-									}									
+									}
 									// find the channel node
 									for (var i = 0; i < xmlContent.childNodes.length; i++) {
 										if (xmlContent.childNodes[i].nodeName == 'channel') {
@@ -230,16 +232,16 @@
 					}					
 				}			
 			}
-			
+
 			function setupContentAndTriggerDisplay() {
-				
+
 				settings.contentLoaded = true;
-				
+
 				// update the ticker content with the correct item
 				// insert news content into DOM
 				$(settings.dom.titleElem).html(settings.newsArr['item-' + settings.position].type);
 				$(settings.dom.contentID).html(settings.newsArr['item-' + settings.position].content);	
-				
+
 				// set the next content item to be used - loop round if we are at the end of the content
 				if (settings.position == (countSize(settings.newsArr) -1)) {
 					settings.position = 0;
@@ -247,16 +249,16 @@
 				else {		
 					settings.position++;
 				}			
-							
+
 				// get the values of content and set the time of the reveal (so all reveals have the same speed regardless of content size)
 				distance = $(settings.dom.contentID).width();
 				time = distance / opts.speed;
-				
+
 				// start the ticker	 - have to fade both element here because of IE strangeness - needs further investigation
 				$(settings.dom.wrapperID)
 					.find(settings.dom.titleID).fadeIn()
 						.end().find(settings.dom.titleElem).fadeIn('slow', revealContent);
-				
+
 			}
 
 			// slide back cover	or fade in content
@@ -289,7 +291,7 @@
 					return false;					
 				}
 			};
-			
+
 			// here we hide the current content and reset the ticker elements to a default state ready for the next ticker item
 			function postReveal() {				
 				if(settings.play) {		
@@ -327,7 +329,7 @@
 					$(settings.dom.revealElem).hide();
 				}
 			}
-			
+
 			// pause ticker
 			function pauseTicker() {				
 				settings.play = false;
@@ -338,7 +340,7 @@
 					.find(settings.dom.titleID + ',' + settings.dom.titleElem).show()
 						.end().find(settings.dom.contentID).show();
 			}
-			
+
 			// play ticker
 			function restartTicker() {				
 				settings.play = true;
@@ -346,7 +348,7 @@
 				// start the ticker again
 				postReveal();	
 			}
-			
+
 			// change the content on user input
 			function manualChangeContent(direction) {
 				pauseTicker();
@@ -379,19 +381,19 @@
 			}
 		});  
 	};  
-	
+
 	// plugin defaults - added as a property on our plugin function
 	$.fn.ticker.defaults = {
 		speed: 0.10,			
 		ajaxFeed: false,
 		feedUrl: '',
-		feedType: '',
+		feedType: 'xml',
 		displayType: 'reveal',
 		htmlFeed: true,
 		debugMode: true,
 		controls: true,
 		titleText: 'Latest',		
-		pauseOnItems: 2000,
+		pauseOnItems: 3000,
 		fadeInSpeed: 300,
 		fadeOutSpeed: 300
 	};	

@@ -81,7 +81,7 @@
 			/* Function to setup the page */
 			function initialisePage() {
 				// add our HTML structure for the ticker to the DOM
-				$(settings.dom.wrapperID).append('<div id="ticker-icon" class="ticker-icon"></div><div id="' + settings.dom.tickerID.replace('#', '') + '"><div id="' + settings.dom.titleID.replace('#', '') + '"><span style="display: none;"><!-- --></span></div><p id="' + settings.dom.contentID.replace('#', '') + '"></p><div id="' + settings.dom.revealID.replace('#', '') + '"><span style="display: none;"><!-- --></span></div></div>');
+				$(settings.dom.wrapperID).append('<div id="' + settings.dom.tickerID.replace('#', '') + '"><div id="' + settings.dom.titleID.replace('#', '') + '"><span style="display: none;"><!-- --></span></div><p id="' + settings.dom.contentID.replace('#', '') + '"></p><div id="' + settings.dom.revealID.replace('#', '') + '"><span style="display: none;"><!-- --></span></div></div>');
 				$(settings.dom.wrapperID).removeClass('no-js').addClass('has-js');
 				// hide the ticker
 				$(settings.dom.tickerElem + ',' + settings.dom.titleElem + ',' + settings.dom.contentID).hide();
@@ -136,15 +136,18 @@
 					$(settings.dom.wrapperID).append('<ul id="' + settings.dom.controlsID.replace('#', '') + '"><li id="' + settings.dom.playPauseID.replace('#', '') + '" class="controls"></li><li id="' + settings.dom.prevID.replace('#', '') + '" class="controls"></li><li id="' + settings.dom.nextID.replace('#', '') + '" class="controls"></li></ul>');
 				}
 				// add mouse over on the content
-				$(settings.dom.contentID).mouseover(function () {
-					if (settings.paused == false) {
-						pauseTicker();
-					}
-				}).mouseout(function () {
-					if (settings.paused == false) {
-						restartTicker();
-					}
-				});
+				if (opts.displayType != 'fade') {
+                		// add mouse over on the content
+                		$(settings.dom.contentID).mouseover(function () {
+                			if (settings.paused == false) {
+                				pauseTicker();
+                			}
+                		}).mouseout(function () {
+                			if (settings.paused == false) {
+                				restartTicker();
+                			}
+                		});
+				}
 				
 				// process the content for this ticker
 				processContent();
@@ -167,14 +170,14 @@
 									// get the 'root' node
 									for (var a = 0; a < data.childNodes.length; a++) {
 										if (data.childNodes[a].nodeName == 'rss') {
-											xmlContent = data.childNodes[a];											
+											xmlContent = data.childNodes[a];
 										}
 									}									
 									// find the channel node
 									for (var i = 0; i < xmlContent.childNodes.length; i++) {
 										if (xmlContent.childNodes[i].nodeName == 'channel') {
 											xmlChannel = xmlContent.childNodes[i];
-										}										
+										}		
 									}
 									// for each item create a link and add the article title as the link text
 									for (var x = 0; x < xmlChannel.childNodes.length; x++) {
@@ -385,13 +388,13 @@
 		speed: 0.10,			
 		ajaxFeed: false,
 		feedUrl: '',
-		feedType: '',
+		feedType: 'xml',
 		displayType: 'reveal',
 		htmlFeed: true,
 		debugMode: true,
 		controls: true,
 		titleText: 'Latest',		
-		pauseOnItems: 2000,
+		pauseOnItems: 3000,
 		fadeInSpeed: 300,
 		fadeOutSpeed: 300
 	};	
