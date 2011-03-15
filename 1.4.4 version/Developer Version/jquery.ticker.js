@@ -201,7 +201,7 @@
 										}								
 									}			
 									// quick check here to see if we actually have any content - log error if not
-									if (countSize(settings.newsArr < 1)) {
+									if (countSize(settings.newsArr) < 1) {
 										debugError('Couldn\'t find any content from the XML feed for the ticker to use!');
 										return false;
 									}
