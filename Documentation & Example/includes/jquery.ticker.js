@@ -16,8 +16,8 @@
 		// Extend our default options with those provided.
 		// Note that the first arg to extend is an empty object -
 		// this is to keep from overriding our "defaults" object.
-		var opts = $.extend({}, $.fn.ticker.defaults, options); 		
-
+		var opts = $.extend({}, $.fn.ticker.defaults, options); 
+		
 		/* Get the id of the UL to get our news content from */
 		var newsID = '#' + $(this).attr('id');
 
@@ -55,6 +55,9 @@
 				return false;
 			}
 
+			// set the ticker direction
+			opts.direction == 'rtl' ? opts.direction = 'right' : opts.direction = 'left';
+			
 			// lets go...
 			initialisePage();
 			/* Function to get the size of an Object*/
@@ -82,15 +85,15 @@
 			function initialisePage() {
 				// add our HTML structure for the ticker to the DOM
 				$(settings.dom.wrapperID).append('<div id="' + settings.dom.tickerID.replace('#', '') + '"><div id="' + settings.dom.titleID.replace('#', '') + '"><span style="display: none;"><!-- --></span></div><p id="' + settings.dom.contentID.replace('#', '') + '"></p><div id="' + settings.dom.revealID.replace('#', '') + '"><span style="display: none;"><!-- --></span></div></div>');
-				$(settings.dom.wrapperID).removeClass('no-js').addClass('has-js');
+				$(settings.dom.wrapperID).removeClass('no-js').addClass('has-js ' + opts.direction);
 				// hide the ticker
 				$(settings.dom.tickerElem + ',' + settings.dom.titleElem + ',' + settings.dom.contentID).hide();
 				// add the controls to the DOM if required
 				if (opts.controls) {
 					// add related events - set functions to run on given event
 					$(settings.dom.controlsID).live('click mouseover mousedown mouseout mouseup', function (e) {
-						var button = e.target.id;		
-						if (e.type == 'click') {											
+						var button = e.target.id;
+						if (e.type == 'click') {	
 							switch (button) {
 								case settings.dom.prevID.replace('#', ''):
 									// show previous item
@@ -147,7 +150,6 @@
                 			}
                 		});
 				}
-
 				// process the content for this ticker
 				processContent();
 			}
@@ -176,28 +178,23 @@
 									for (var i = 0; i < xmlContent.childNodes.length; i++) {
 										if (xmlContent.childNodes[i].nodeName == 'channel') {
 											xmlChannel = xmlContent.childNodes[i];
-										}										
+										}		
 									}
 									// for each item create a link and add the article title as the link text
 									for (var x = 0; x < xmlChannel.childNodes.length; x++) {
 										if (xmlChannel.childNodes[x].nodeName == 'item') {
-											xmlItems = xmlChannel.childNodes[x];											
+											xmlItems = xmlChannel.childNodes[x];
 											var title, link = false;
-											for (var y = 0; y < xmlItems.childNodes.length; y++) {	
-												if (xmlItems.childNodes[y].nodeName == 'title') {
-													title = xmlItems.childNodes[y].lastChild.nodeValue;
-												}	
-												else if (xmlItems.childNodes[y].nodeName == 'link') {
-													link = xmlItems.childNodes[y].lastChild.nodeValue; 
-												}		
-												if ((title !== false && title != '') && link !== false) {
-													settings.newsArr['item-' + count] = { type: opts.titleText, content: '<a href="' + link + '">' + title + '</a>' };
-													count++;	
-													title = false;
-													link = false;
+											for (var y = 0; y < xmlItems.childNodes.length; y++) {
+												if (xmlItems.childNodes[y].nodeName == 'title') {      												    title = xmlItems.childNodes[y].lastChild.nodeValue;
 												}
-											}											
-										}								
+												else if (xmlItems.childNodes[y].nodeName == 'link') {												    link = xmlItems.childNodes[y].lastChild.nodeValue; 
+												}
+												if ((title !== false && title != '') && link !== false) {
+												    settings.newsArr['item-' + count] = { type: opts.titleText, content: '<a href="' + link + '">' + title + '</a>' };												    count++;												    title = false;												    link = false;
+												}
+											}	
+										}		
 									}			
 									// quick check here to see if we actually have any content - log error if not
 									if (countSize(settings.newsArr < 1)) {
@@ -210,12 +207,12 @@
 							});							
 						}
 						else {
-							debugError('Code Me!');							
+							debugError('Code Me!');	
 						}						
 					}
 					else if (opts.htmlFeed) { 
 						if($(newsID + ' LI').length > 0) {
-							$(newsID + ' LI').each(function (i) {	
+							$(newsID + ' LI').each(function (i) {
 								// maybe this could be one whole object and not an array of objects?
 								settings.newsArr['item-' + i] = { type: opts.titleText, content: $(this).html()};
 							});		
@@ -240,7 +237,7 @@
 				// update the ticker content with the correct item
 				// insert news content into DOM
 				$(settings.dom.titleElem).html(settings.newsArr['item-' + settings.position].type);
-				$(settings.dom.contentID).html(settings.newsArr['item-' + settings.position].content);	
+				$(settings.dom.contentID).html(settings.newsArr['item-' + settings.position].content);
 
 				// set the next content item to be used - loop round if we are at the end of the content
 				if (settings.position == (countSize(settings.newsArr) -1)) {
@@ -254,24 +251,24 @@
 				distance = $(settings.dom.contentID).width();
 				time = distance / opts.speed;
 
-				// start the ticker	 - have to fade both element here because of IE strangeness - needs further investigation
+				// start the ticker - have to fade both element here because of IE strangeness - needs further investigation
 				$(settings.dom.wrapperID)
 					.find(settings.dom.titleID).fadeIn()
 						.end().find(settings.dom.titleElem).fadeIn('slow', revealContent);
 
 			}
 
-			// slide back cover	or fade in content
+			// slide back cover or fade in content
 			function revealContent() {
 				if(settings.play) {	
 					// get the width of the title element to offset the content and reveal
 					var offset = $(settings.dom.titleElem).width() + 20;
-					$(settings.dom.revealID).css('left', offset + 'px');
+					$(settings.dom.revealID).css(opts.direction, offset + 'px');
 					// show the reveal element and start the animation
 					if (opts.displayType == 'fade') {
 						// fade in effect ticker
 						$(settings.dom.revealID).hide(0, function () {
-							$(settings.dom.contentID).css('left', offset + 'px').delay(20).fadeIn('slow', postReveal);	
+							$(settings.dom.contentID).css(opts.direction, offset + 'px').delay(20).fadeIn('slow', postReveal);
 						});						
 					}
 					else if (opts.displayType == 'scroll') {
@@ -280,10 +277,10 @@
 					else {
 						// default bbc scroll effect
 						$(settings.dom.revealElem).show(0, function () {
-							$(settings.dom.contentID).css('left', offset + 'px').show();
-							$(settings.dom.revealID).css('margin-left', '0px').delay(20).animate({
-								marginLeft: distance + 'px'
-							}, time, 'linear', postReveal);
+							$(settings.dom.contentID).css(opts.direction, offset + 'px').show();
+							// set our animation direction
+							animationAction = opts.direction == 'right' ? { marginRight: distance + 'px'} : { marginLeft: distance + 'px' };
+							$(settings.dom.revealID).css('margin-' + opts.direction, '0px').delay(20).animate(animationAction, time, 'linear', postReveal);
 						});		
 					}
 				}
@@ -392,7 +389,8 @@
 		htmlFeed: true,
 		debugMode: true,
 		controls: true,
-		titleText: 'Latest',		
+		titleText: 'Latest',	
+		direction: 'ltr',	
 		pauseOnItems: 3000,
 		fadeInSpeed: 300,
 		fadeOutSpeed: 300
