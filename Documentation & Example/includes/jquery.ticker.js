@@ -50,8 +50,8 @@
 			};
 
 			// if we are not using a UL, display an error message and stop any further execution
-			if (tagType != 'UL' && opts.htmlFeed === true) {
-				debugError('Cannot use <' + tagType.toLowerCase() + '> type of element for this plugin - must of type <ul>');
+			if (tagType != 'UL' && tagType != 'OL' && opts.htmlFeed === true) {
+				debugError('Cannot use <' + tagType.toLowerCase() + '> type of element for this plugin - must of type <ul> or <ol>');
 				return false;
 			}
 
