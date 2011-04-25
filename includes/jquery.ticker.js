@@ -256,7 +256,7 @@
 				// start the ticker - have to fade both element here because of IE strangeness - needs further investigation
 				$(settings.dom.wrapperID)
 					.find(settings.dom.titleID).fadeIn()
-						.end().find(settings.dom.titleElem).fadeIn('slow', revealContent);
+						.end().find(settings.dom.titleElem).fadeIn(opts.fadeInSpeed, revealContent);
 
 			}
 
@@ -270,7 +270,7 @@
 					if (opts.displayType == 'fade') {
 						// fade in effect ticker
 						$(settings.dom.revealID).hide(0, function () {
-							$(settings.dom.contentID).css(opts.direction, offset + 'px').delay(20).fadeIn('slow', postReveal);
+							$(settings.dom.contentID).css(opts.direction, offset + 'px').fadeIn(opts.fadeInSpeed, postReveal);
 						});						
 					}
 					else if (opts.displayType == 'scroll') {
@@ -295,7 +295,7 @@
 			function postReveal() {				
 				if(settings.play) {		
 					// we have to separately fade the content out here to get around an IE bug - needs further investigation
-					$(settings.dom.contentID).delay(opts.pauseOnItems).fadeOut('slow');
+					$(settings.dom.contentID).delay(opts.pauseOnItems).fadeOut(opts.fadeOutSpeed);
 					// deal with the rest of the content, prepare the DOM and trigger the next ticker
 					if (opts.displayType == 'fade') {
 						$(settings.dom.contentID).fadeOut(opts.fadeOutSpeed, function () {
@@ -394,7 +394,7 @@
 		titleText: 'Latest',	
 		direction: 'ltr',	
 		pauseOnItems: 3000,
-		fadeInSpeed: 300,
+		fadeInSpeed: 600,
 		fadeOutSpeed: 300
 	};	
 })(jQuery);
