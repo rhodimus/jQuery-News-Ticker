@@ -84,10 +84,10 @@
 			/* Function to setup the page */
 			function initialisePage() {
 				// add our HTML structure for the ticker to the DOM
-				$(settings.dom.wrapperID).append('<div id="' + settings.dom.tickerID.replace('#', '') + '"><div id="' + settings.dom.titleID.replace('#', '') + '"><span style="display: none;"><!-- --></span></div><p id="' + settings.dom.contentID.replace('#', '') + '"></p><div id="' + settings.dom.revealID.replace('#', '') + '"><span style="display: none;"><!-- --></span></div></div>');
+				$(settings.dom.wrapperID).append('<div id="' + settings.dom.tickerID.replace('#', '') + '"><div id="' + settings.dom.titleID.replace('#', '') + '"><span><!-- --></span></div><p id="' + settings.dom.contentID.replace('#', '') + '"></p><div id="' + settings.dom.revealID.replace('#', '') + '"><span><!-- --></span></div></div>');
 				$(settings.dom.wrapperID).removeClass('no-js').addClass('has-js ' + opts.direction);
 				// hide the ticker
-				$(settings.dom.tickerElem + ',' + settings.dom.titleElem + ',' + settings.dom.contentID).hide();
+				$(settings.dom.tickerElem + ',' + settings.dom.contentID).hide();
 				// add the controls to the DOM if required
 				if (opts.controls) {
 					// add related events - set functions to run on given event
@@ -253,11 +253,8 @@
 				distance = $(settings.dom.contentID).width();
 				time = distance / opts.speed;
 
-				// start the ticker - have to fade both element here because of IE strangeness - needs further investigation
-				$(settings.dom.wrapperID)
-					.find(settings.dom.titleID).fadeIn()
-						.end().find(settings.dom.titleElem).fadeIn(opts.fadeInSpeed, revealContent);
-
+				// start the ticker animation						
+				revealContent();		
 			}
 
 			// slide back cover or fade in content
@@ -302,22 +299,22 @@
 							$(settings.dom.wrapperID)
 								.find(settings.dom.revealElem + ',' + settings.dom.contentID)
 									.hide()
-								.end().find(settings.dom.tickerID + ',' + settings.dom.revealID + ',' + settings.dom.titleID)
+								.end().find(settings.dom.tickerID + ',' + settings.dom.revealID)
 									.show()
-								.end().find(settings.dom.tickerID + ',' + settings.dom.revealID + ',' + settings.dom.titleID)
+								.end().find(settings.dom.tickerID + ',' + settings.dom.revealID)
 									.removeAttr('style');								
 							setupContentAndTriggerDisplay();						
 						});
 					}
 					else {
 						$(settings.dom.revealID).hide(0, function () {
-							$(settings.dom.tickerID).delay(opts.pauseOnItems).fadeOut(opts.fadeOutSpeed, function () {
+							$(settings.dom.contentID).fadeOut(opts.fadeOutSpeed, function () {
 								$(settings.dom.wrapperID)
-									.find(settings.dom.titleElem +',' + settings.dom.revealElem + ',' + settings.dom.contentID)
+									.find(settings.dom.revealElem + ',' + settings.dom.contentID)
 										.hide()
-									.end().find(settings.dom.tickerID + ',' + settings.dom.revealID + ',' + settings.dom.titleID)
+									.end().find(settings.dom.tickerID + ',' + settings.dom.revealID)
 										.show()
-									.end().find(settings.dom.tickerID + ',' + settings.dom.revealID + ',' + settings.dom.titleID)
+									.end().find(settings.dom.tickerID + ',' + settings.dom.revealID)
 										.removeAttr('style');								
 								setupContentAndTriggerDisplay();						
 							});
