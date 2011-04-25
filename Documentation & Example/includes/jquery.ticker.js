@@ -155,7 +155,7 @@
 			}
 
 			/* Start to process the content for this ticker */
-			function processContent() {	
+			function processContent() {
 				// check to see if we need to load content
 				if (settings.contentLoaded == false) {
 					// construct content
@@ -186,9 +186,11 @@
 											xmlItems = xmlChannel.childNodes[x];
 											var title, link = false;
 											for (var y = 0; y < xmlItems.childNodes.length; y++) {
-												if (xmlItems.childNodes[y].nodeName == 'title') {      												    title = xmlItems.childNodes[y].lastChild.nodeValue;
+												if (xmlItems.childNodes[y].nodeName == 'title') {      												    
+													title = xmlItems.childNodes[y].lastChild.nodeValue;
 												}
-												else if (xmlItems.childNodes[y].nodeName == 'link') {												    link = xmlItems.childNodes[y].lastChild.nodeValue; 
+												else if (xmlItems.childNodes[y].nodeName == 'link') {												    
+													link = xmlItems.childNodes[y].lastChild.nodeValue; 
 												}
 												if ((title !== false && title != '') && link !== false) {
 												    settings.newsArr['item-' + count] = { type: opts.titleText, content: '<a href="' + link + '">' + title + '</a>' };												    count++;												    title = false;												    link = false;
@@ -330,7 +332,7 @@
 			// pause ticker
 			function pauseTicker() {				
 				settings.play = false;
-				// stop animation and show content - must pass true, true to the stop function, or we can get some funky behaviour
+				// stop animation and show content - must pass "true, true" to the stop function, or we can get some funky behaviour
 				$(settings.dom.tickerID + ',' + settings.dom.revealID + ',' + settings.dom.titleID + ',' + settings.dom.titleElem + ',' + settings.dom.revealElem + ',' + settings.dom.contentID).stop(true, true);
 				$(settings.dom.revealID + ',' + settings.dom.revealElem).hide();
 				$(settings.dom.wrapperID)
