@@ -1,42 +1,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="description" content="jQuery News Ticker is a lightweight, stylish, easy to use and flexible jQuery news ticker" />
 	<title>jQuery News Ticker</title>
-	<link href="styles/style.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script> 
-	<script src="includes/jquery.ticker.js" type="text/javascript"></script>
-	<script type="text/javascript">
-		$(function () {
-			$('#js-news').ticker();
-
-			// hide the release history when the page loads
-			$('#release-wrapper').css('margin-top', '-' + ($('#release-wrapper').height() + 20) + 'px');	
-
-			// show/hide the release history on click
-			$('a[href="#release-history"]').toggle(function () {	
-				$('#release-wrapper').animate({
-					marginTop: '0px'
-				}, 600, 'linear');
-			}, function () {
-				$('#release-wrapper').animate({
-					marginTop: '-' + ($('#release-wrapper').height() + 20) + 'px'
-				}, 600, 'linear');
-			});	
-		});
-	</script>	
+	<link href="media/styles/v2-style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 	<h1>jQuery News Ticker</h1>
 	<div id="ticker-wrapper" class="no-js">
-		<ol id="js-news" class="js-hidden">
+		<ul id="js-news" class="js-hidden">
 			<li class="news-item">jQuery News Ticker now has support for loading content via an RSS feed!</li>
 			<li class="news-item">jQuery News Ticker now has an optional fade effect between items!</li>
 			<li class="news-item">New updates have been made to jQuery News Ticker! Check below for more details!</li>
 			<li class="news-item">jQuery News Ticker is now compatible with jQuery 1.3.2! See below for further details and for latest download.</li>
 			<li class="news-item">Further updates to jQuery News Ticker are coming soon!</li>
-		</ol>
+		</ul>
 		<noscript>
 			<h2>Latest News</h2>
 			<ul id="no-js-news">
@@ -63,13 +42,22 @@
 		
 		<div class="content-box">	
 		
-			<p>If you're reading this then you've successfully downloaded the zip file containing the plugin (both development and minified versions) and this example / documentation - well done!</p>
+			<p>First, download the zip file containing the plugin and the example / documentation for the news ticker:</p>
 			
+			<div id="download">
+				<a href="jquery_news_ticker_2011-02-23.zip">
+					<img src="http://static.jquerynewsticker.com/images/dl-arr.png" alt="Download Now" />
+					<span class="dl">Download now</span>
+					<span class="sub">source files and docs</span>
+				</a>
+			</div>
 			
-			<p>The latest version of jQuery News Ticker is v1.4 which was released on 21st November 2010 <a href="#release-history">(view release history)</a>.</p>
+			<p>The latest version of jQuery News Ticker is v1.5 which was released on 23rd Feb 2011 <a href="#release-history">(view release history)</a>.</p>
 				
 			<div id="release-history">
 				<div id="release-wrapper">
+					<p><strong>v1.6</strong> - 2011-04-25 - Support for right-to-left languages, orders lists and a few bug fixes</p>
+					<p><strong>v1.5</strong> - 2011-02-23 - Various bug fixes</p>
 					<p><strong>v1.4</strong> - 2010-11-21 - jQuery News Ticker now has support for loading content via an RSS feed (1.4 compatible version only)</p>
 					<p><strong>v1.3</strong> - 2010-10-25 - jQuery News Ticker now has an option for fading between news items (1.4 compatible version only)</p>
 					<p><strong>v1.2</strong> - 2010-06-26 - jQuery News Ticker is now compatible with jQuery 1.3.2, see the zip file for this version.</p>
@@ -84,18 +72,13 @@
 		
 		<div class="content-box divider-bottom">
 		
-			<p>If you want the <strong>fully styled, development version</strong> (as above) of the news ticker, use the files from the development folder in the zip and include the following in your HTML:</p>
+			<p>If you want the <strong>fully styled version</strong> (as above) of the news ticker, use the files from the zip and include the following in your HTML:</p>
 	
 			<pre><code>&lt;link <span class="grey">href</span>=<span class="red">&quot;css/style.css&quot;</span> <span class="grey">rel</span>=<span class="red">&quot;stylesheet&quot;</span> <span class="grey">type</span>=<span class="red">&quot;text/css&quot;</span> /&gt;
 &lt;script <span class="grey">src</span>=<span class="red">&quot;jquery.ticker.js&quot;</span> <span class="grey">type</span>=<span class="red">&quot;text/javascript&quot;</span>&gt;&lt;/script&gt;</code></pre>
-			
-			<p>If you want just the <strong>minified, production version</strong> of the news ticker, use the files from the minified folder in the zip and include the following in your HTML:</p>
-		
-			<pre><code>&lt;link <span class="grey">href</span>=<span class="red">&quot;css/min-style.css&quot;</span> <span class="grey">rel</span>=<span class="red">&quot;stylesheet&quot;</span> <span class="grey">type</span>=<span class="red">&quot;text/css&quot;</span> /&gt;
-&lt;script <span class="grey">src</span>=<span class="red">&quot;jquery.ticker.min.js&quot;</span> <span class="grey">type</span>=<span class="red">&quot;text/javascript&quot;</span>&gt;&lt;/script&gt;</code></pre>
-	
-			<p>Unsurprisingly you will need to include <strong>jQuery </strong> (1.3.2 or above) to make all this work, there is a version (1.4.2) included in the zip.</p>
-			<p><del>Apologies to anyone using an earlier version, I may update the code be compatible with jQuery 1.3 if there is enough demand.</del> There is now a version of jQuery news ticker included in the zip that is fully jQuery 1.3.2 compatible!</p>
+				
+			<p>Unsurprisingly you will need to include <strong>jQuery </strong> (1.4.2 or above) to make all this work, I recommend using <a target="_blank" href="http://code.google.com/apis/libraries/">Google's Ajax Libraries API</a> for the very latest version.</p>
+			<p><del>Apologies to anyone using an earlier version, I may update the code be compatible with jQuery 1.3 if there is enough demand.</del> A version of jQuery News Ticker that is jQuery 1.3.2 compatible can be downloaded here: <a href="/jquery.ticker.legacy.js">jquery.ticker.js</a>. Please note that this version does not have all of the features of jQuery News Ticker and is no longer being actively developed.</p>
 	
 		</div>
 		
@@ -106,26 +89,28 @@
 			<p>Yes you do, all you need is the following HTML:</p>
 		
 			<pre><code>&lt;div <span class="grey">id</span>=<span class="red">&quot;ticker-wrapper&quot;</span> <span class="grey">class</span>=<span class="red">&quot;no-js&quot;</span>&gt;
-	&lt;ul <span class="grey">id</span>=<span class="red">&quot;js-news&quot;</span> <span class="grey">class</span>=<span class="red">&quot;js-hidden&quot;</span>&gt;
-		&lt;li <span class="grey">class</span>=<span class="red">&quot;news-item&quot;</span>&gt;&lt;a <span class="grey">href</span>=<span class="red">&quot;#&quot;</span>&gt;<span class="grey">This is the 1st latest news item.</span>&lt;/a&gt;&lt;/li&gt;
-		&lt;li <span class="grey">class</span>=<span class="red">&quot;news-item&quot;</span>&gt;&lt;a <span class="grey">href</span>=<span class="red">&quot;#&quot;</span>&gt;<span class="grey">This is the 2nd latest news item.</span>&lt;/a&gt;&lt;/li&gt;
-		&lt;li <span class="grey">class</span>=<span class="red">&quot;news-item&quot;</span>&gt;&lt;a <span class="grey">href</span>=<span class="red">&quot;#&quot;</span>&gt;<span class="grey">This is the 3rd latest news item.</span>&lt;/a&gt;&lt;/li&gt;
-		&lt;li <span class="grey">class</span>=<span class="red">&quot;news-item&quot;</span>&gt;&lt;a <span class="grey">href</span>=<span class="red">&quot;#&quot;</span>&gt;<span class="grey">This is the 4th latest news item.</span>&lt;/a&gt;&lt;/li&gt;
-	&lt;/ul&gt;
+    &lt;ul <span class="grey">id</span>=<span class="red">&quot;js-news&quot;</span> <span class="grey">class</span>=<span class="red">&quot;js-hidden&quot;</span>&gt;
+        &lt;li <span class="grey">class</span>=<span class="red">&quot;news-item&quot;</span>&gt;&lt;a <span class="grey">href</span>=<span class="red">&quot;#&quot;</span>&gt;<span class="grey">This is the 1st latest news item.</span>&lt;/a&gt;&lt;/li&gt;
+        &lt;li <span class="grey">class</span>=<span class="red">&quot;news-item&quot;</span>&gt;&lt;a <span class="grey">href</span>=<span class="red">&quot;#&quot;</span>&gt;<span class="grey">This is the 2nd latest news item.</span>&lt;/a&gt;&lt;/li&gt;
+        &lt;li <span class="grey">class</span>=<span class="red">&quot;news-item&quot;</span>&gt;&lt;a <span class="grey">href</span>=<span class="red">&quot;#&quot;</span>&gt;<span class="grey">This is the 3rd latest news item.</span>&lt;/a&gt;&lt;/li&gt;
+        &lt;li <span class="grey">class</span>=<span class="red">&quot;news-item&quot;</span>&gt;&lt;a <span class="grey">href</span>=<span class="red">&quot;#&quot;</span>&gt;<span class="grey">This is the 4th latest news item.</span>&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
 &lt;/div&gt;</code></pre>	
+
+		<p>jQuery News Ticker will also work fine with an &lt;ol&gt; element to contain the news items.</p>
 	
 		</div>
 	
-		<h3>And how do I make jQuery do it's magic on this thing?</h3>
+		<h3>And how do I make jQuery do its magic on this thing?</h3>
 		
 		<div class="content-box divider-bottom">
 		
 			<p>To get jQuery News Ticker working, you'll need to also add this code to your page:</p>
 		
 			<pre><code>&lt;script <span class="grey">type</span>=<span class="red">&quot;text/javascript&quot;</span>&gt;
-	$(<span class="red">function</span> () {
-		$(<span class="red">'#js-news'</span>).ticker();
-	});
+    $(<span class="red">function</span> () {
+        $(<span class="red">'#js-news'</span>).ticker();
+    });
 &lt;/script&gt;</code>
 </pre>	
 
@@ -145,45 +130,29 @@
 				
 		<div class="content-box">
 		
-			<p>Ok, so here's what you can do an the moment:</p>
+			<p>Ok, so here are the settings that can be changed, shown with their default values:</p>
 			
-			<dl>
-				<dt>speed: 0.10</dt>
-				<dd>The speed of the reveal</dd>
-				
-				<dt>ajaxFeed: false</dt>
-				<dd>Populate the news items via a remote feed</dd>
-				
-				<dt>feedUrl: false</dt>
-				<dd>The remote URL to populate the feed from, must be on the same domain as the ticker</dd>
-				
-				<dt>feedType: 'xml'</dt>
-				<dd>The type of feed that the ticker should expect - currently only XML</dd>
-				
-				<dt>htmlFeed: true</dt>
-				<dd>Populate the news items via the HTML</dd>
-				
-				<dt>debugMode: true</dt>
-				<dd>Show some (possibly) helpful errors in the console or as alerts.<br /><strong>SHOULD BE SET TO FALSE FOR PRODUCTION SITES!</strong></dd>
-				
-				<dt>controls: true</dt>
-				<dd>Whether or not to show the tickers controls</dd>
-
-				<dt>titleText: 'Latest' </dt>
-				<dd>The "title" for the ticker</dd>
-				
-				<dt>displayType: 'reveal'</dt>
-				<dd>The type of display for the ticker - current options are 'reveal' or 'fade'.</dd>
-						
-				<dt>pauseOnItems: 2000</dt>
-				<dd>The amount of time a news item stays on the page before being replaced</dd>
-				
-				<dt>fadeInSpeed: 300</dt>
-				<dd>Speed of a news items fade in animation</dd>
-				
-				<dt>fadeOutSpeed: 300</dt>
-				<dd>Speed of a news items fade out animation</dd>
-			</dl>	
+			<pre><code>
+$(<span class="red">function</span> () {
+    $(<span class="red">'#js-news'</span>).ticker(
+        <span class="grey">speed</span>: <span class="red">0.10</span>,           <span class="grey">// The speed of the reveal</span>
+        <span class="grey">ajaxFeed</span>: <span class="red">false</span>,       <span class="grey">// Populate jQuery News Ticker via a feed</span>
+        <span class="grey">feedUrl</span>: <span class="red">false</span>,        <span class="grey">// The URL of the feed
+	                       // <strong>MUST BE ON THE SAME DOMAIN AS THE TICKER</strong></span>
+        <span class="grey">feedType</span>: <span class="red">'xml'</span>,       <span class="grey">// Currently only XML</span>
+        <span class="grey">htmlFeed</span>: <span class="red">true</span>,        <span class="grey">// Populate jQuery News Ticker via HTML</span>
+        <span class="grey">debugMode</span>: <span class="red">true</span>,       <span class="grey">// Show some helpful errors in the console or as alerts
+  	                       // <strong>SHOULD BE SET TO FALSE FOR PRODUCTION SITES!</strong></span>
+        <span class="grey">controls</span>: <span class="red">true</span>,        <span class="grey">// Whether or not to show the jQuery News Ticker controls</span>
+        <span class="grey">titleText</span>: <span class="red">'Latest'</span>,   <span class="grey">// To remove the title set this to an empty String</span>
+        <span class="grey">displayType</span>: <span class="red">'reveal'</span>, <span class="grey">// Animation type - current options are 'reveal' or 'fade'</span>
+        <span class="grey">direction</span>: <span class="red">'ltr'</span>       <span class="grey">// Ticker direction - current options are 'ltr' or 'rtl'</span>
+        <span class="grey">pauseOnItems</span>: <span class="red">2000</span>,    <span class="grey">// The pause on a news item before being replaced</span>
+        <span class="grey">fadeInSpeed</span>: <span class="red">300</span>,      <span class="grey">// Speed of fade in animation</span>
+        <span class="grey">fadeOutSpeed</span>: <span class="red">300</span>      <span class="grey">// Speed of fade out animation</span>
+    );
+});			
+			</pre></code>		
 		
 		</div>
 		
@@ -194,14 +163,14 @@
 			<p>Any changes you want to make to the default settings are passed in to the call of the news ticker, like so:</p>	
 			
 			<pre><code>&lt;script <span class="grey">type</span>=<span class="red">&quot;text/javascript&quot;</span>&gt;
-	$(<span class="red">function</span> () {
-		$(<span class="red">'#js-news'</span>).ticker({
-			<span class="grey">speed</span>: <span class="red">0.10</span>,
-			<span class="grey">htmlFeed</span>: <span class="red">false</span>,
-			<span class="grey">fadeInSpeed</span>: <span class="red">600</span>,
-			<span class="grey">titleText</span>: <span class="red">'Latest News'</span>
-		});
-	});
+    $(<span class="red">function</span> () {
+        $(<span class="red">'#js-news'</span>).ticker({
+            <span class="grey">speed</span>: <span class="red">0.10</span>,
+            <span class="grey">htmlFeed</span>: <span class="red">false</span>,
+            <span class="grey">fadeInSpeed</span>: <span class="red">600</span>,
+            <span class="grey">titleText</span>: <span class="red">'Latest News'</span>
+        });
+    });
 &lt;/script&gt;</code></pre>			
 		
 		</div>	
@@ -210,7 +179,7 @@
 		
 		<div class="content-box divider-bottom">
 		
-			<p>So far this plugin had been tested as working with: IE6+, FF 3.6+, Chrome, Safari, Safari Mobile.</p>
+			<p>So far this plugin had been tested as working with: IE6+, FF 3.6+, Chrome, Safari, Safari Mobile and Opera.</p>
 			
 			<p>If you do find any bugs, or any further browser compatibility, <a href="mailto:jquerynewsticker@gmail.com">let me know</a>.</p>
 	
@@ -224,18 +193,32 @@
 	
 		</div>
 		
-		<h2 class="divider-top">What about loading content from a remote feed?!</h2>
+		<h2 class="divider-top">What about loading content from a feed?!</h2>
 		
 		<div class="content-box">
 		
 			<p><del>Yeah, well the population of news items will be from HTML only for now I'm afraid...</del></p> 
 			
-			<p>You're in luck! The latest update to jQuery News Ticker introduced support for loading remote content via RSS!</p>
+			<p>You're in luck! The latest update to jQuery News Ticker introduced support for loading content of an RSS feed via ajax!</p>
 			
-			<p>Be warned, this is a very simple implementation and for it to work your XML feed should match the example found here: <a target="_blank" href="http://en.wikipedia.org/wiki/RSS#Example">http://en.wikipedia.org/wiki/RSS#Example</a>.</p>
-			<p>If you are integrating jQuery News Ticker into WordPress or similar you should be fine.</p>
+			<p>The basic code you want for using an RSS feed is something like:</p>
+		        
+            <pre><code>&lt;script <span class="grey">type</span>=<span class="red">&quot;text/javascript&quot;</span>&gt;
+    $(<span class="red">function</span> () {
+        $(<span class="red">'#js-news'</span>).ticker({
+            <span class="grey">htmlFeed</span>: <span class="red">false</span>,
+            <span class="grey">ajaxFeed</span>: <span class="red">true</span>,
+            <span class="grey">feedUrl</span>: <span class="red">'PUT THE URL OF THE RSS FEED HERE - e.g. http://example.com/rss.xml'</span>,
+            <span class="grey">feedType</span>: <span class="red">'xml'</span>
+        });
+    });
+&lt;/script&gt;</code></pre>
+
+			<p>It's worth noting at this point that the RSS feed <strong>must</strong> be on the same domain that the news ticker as jQuery does not allow cross-domain requests.</p>
+				
+			<p>If you want to use a feed from a different domain you'll need to either implement a server-side solution or use something like a JSON proxy.</p>
 			
-			<p>Further support for loading new items from a remote URL (HTML/JSON) will be coming in a future release, so stay tuned!</p>	
+			<p>Further support for loading new items from different feed sources will be coming in a future release, so stay tuned!</p>	
 		
 		</div>
 		
@@ -250,10 +233,32 @@
 			<p>And hopefully some more flexibility in options for the plugin and support for multiple tickers on one page. <a href="mailto:jquerynewsticker@gmail.com">If you want to see a feature, drop me a line</a>.</p>
 	
 		</div>
+		
+		<h2 class="divider-top">Hey, this is really great work - how can I thank you?</h2>
+		
+		<div class="content-box divider-bottom">
+		
+			<p>Feel free to <a href="mailto:jquerynewsticker@gmail.com">drop me a line</a> to say thanks, or if you are feeling generous donations via PayPal are always welcome!</p>
+			
+			<form id="paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+			<input type="hidden" name="cmd" value="_s-xclick">
+			<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+			">
+			<input type="image" src="https://www.paypalobjects.com/WEBSCR-640-20110401-1/en_US/GB/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online.">
+			<img alt="" border="0" src="https://www.paypalobjects.com/WEBSCR-640-20110401-1/en_GB/i/scr/pixel.gif" width="1" height="1">
+			</form>
+				
+		</div>
 	
 	</div>
 	
-	<p class="copy divider-top">Copyright &copy; 2010</p>
+	<p class="copy divider-top">Copyright &copy; 2011</p>
+		
+	<a id="github" href="http://github.com/rhodimus/jQuery-News-Ticker"><img src="http://static.jquerynewsticker.com/images/forkme.png" alt="Fork me on GitHub"></a>
+	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script> 
+	<script src="media/includes/jquery.ticker.js" type="text/javascript"></script>
+	<script src="media/includes/site.js" type="text/javascript"></script>
 	
 </body>
 </html>

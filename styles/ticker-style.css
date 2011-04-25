@@ -1,77 +1,76 @@
-#ticker-wrapper * {
-	margin: 0px;
-}
+/* Ticker Styling */
 #ticker-wrapper.has-js {
-	margin: 20px 0px 0px 20px;
-	width: 800px;
-	height: 30px;
-	border: 1px solid #CFCFCF;
+	margin: 20px 0px 20px 0px;
+	padding: 0px 20px;
+	width: 780px;
+	height: 32px;
 	display: block;
-	font-family: Arial;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	background-color: #f8f0db;
 	font-size: 0.75em;
 }
 #ticker {
-	padding: 0px 0px 0px 10px;
-	width: 715px;
+	width: 710px;
 	height: 23px;
 	display: block;
-	float: left;
 	position: relative;
 	overflow: hidden;
-	background-color: #ffffff;
+	background-color: #f8f0db;
 }
 #ticker-title {
-	padding-top: 7px;
-	float: left; 	
+	padding-top: 9px;
 	color: #990000;
 	font-weight: bold;
-	background-color: #ffffff;
+	background-color: #f8f0db;
 	text-transform: uppercase;
 }
 #ticker-content {
 	margin: 0px;
-	padding-top: 7px;
-	float: left;
+	padding-top: 9px;
 	position: absolute;
 	color: #1F527B;
 	font-weight: bold;
-	background-color: #ffffff;
+	background-color: #f8f0db;
+	overflow: hidden;
+	white-space: nowrap;
+	line-height: 1.2em;
 }
 #ticker-content:focus {
 	none;
 }
-#ticker-content A {
+#ticker-content a {
 	text-decoration: none;	
 	color: #1F527B;
 }
-#ticker-content A:hover {
+#ticker-content a:hover {
 	text-decoration: underline;	
 	color: #0D3059;
 }
 #ticker-swipe {
-	padding-top: 7px;
+	padding-top: 9px;
 	position: absolute;
 	top: 0px;
-	left: 80px;
-	background-color: #ffffff;
+	background-color: #f8f0db;
 	display: block;
 	width: 800px;
 	height: 23px; 
 }
-#ticker-swipe SPAN {
+#ticker-swipe span {
 	margin-left: 1px;
-	background-color: #ffffff;
+	background-color: #f8f0db;
 	border-bottom: 1px solid #1F527B;
 	height: 12px;
 	width: 7px;
 	display: block;
 }
 #ticker-controls {
-	padding: 7px 10px 0px 0px;
+	padding: 8px 0px 0px 0px;
 	list-style-type: none;
-	float: right;
+	float: left;
 }
-#ticker-controls LI {
+#ticker-controls li {
 	padding: 0px;
 	margin-left: 5px;
 	float: left;
@@ -80,46 +79,68 @@
 	width: 16px;
 	display: block;
 }
-#ticker-controls LI#play-pause {
+#ticker-controls li#play-pause {
 	background-image: url('../images/controls.png');
 	background-position: 32px 16px;
 }
-#ticker-controls LI#play-pause.over {
+#ticker-controls li#play-pause.over {
 	background-position: 32px 32px;
 }
-#ticker-controls LI#play-pause.down {
+#ticker-controls li#play-pause.down {
 	background-position: 32px 0px;
 }
-#ticker-controls LI#play-pause.paused {
+#ticker-controls li#play-pause.paused {
 	background-image: url('../images/controls.png');	
 	background-position: 48px 16px;
 }
-#ticker-controls LI#play-pause.paused.over {
+#ticker-controls li#play-pause.paused.over {
 	background-position: 48px 32px;
 }
-#ticker-controls LI#play-pause.paused.down {
+#ticker-controls li#play-pause.paused.down {
 	background-position: 48px 0px;
 }
-#ticker-controls LI#prev {
+#ticker-controls li#prev {
 	background-image: url('../images/controls.png');
 	background-position: 0px 16px;		
 }
-#ticker-controls LI#prev.over {
+#ticker-controls li#prev.over {
 	background-position: 0px 32px;		
 }
-#ticker-controls LI#prev.down {
+#ticker-controls li#prev.down {
 	background-position: 0px 0px;		
 }
-#ticker-controls LI#next {
+#ticker-controls li#next {
 	background-image: url('../images/controls.png');	
 	background-position: 16px 16px;	
 }
-#ticker-controls LI#next.over {
+#ticker-controls li#next.over {
 	background-position: 16px 32px;	
 }
-#ticker-controls LI#next.down {	
+#ticker-controls li#next.down {	
 	background-position: 16px 0px;	
 }
 .js-hidden {
 	display: none;
+}
+#no-js-news {
+	padding: 10px 0px 0px 45px; 
+	color: #F8F0DB;
+}
+.left #ticker-swipe {
+	left: 80px;
+}
+.left #ticker-controls, .left #ticker-content, .left #ticker-title, .left #ticker {
+    float: left;
+}
+.left #ticker-controls {
+    padding-left: 6px;
+}
+.right #ticker-swipe {
+	right: 80px;
+}
+.right #ticker-controls, .right #ticker-content, .right #ticker-title, .right #ticker {
+    float: right;
+}
+.right #ticker-controls {
+    padding-right: 6px;
 }
