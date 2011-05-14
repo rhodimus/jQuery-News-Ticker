@@ -22,7 +22,7 @@
 		var newsID = '#' + $(this).attr('id');
 
 		/* Get the tag type - we will check this later to makde sure it is a UL tag */
-		var tagType = $(this).attr('tagName'); 	
+		var tagType = $(this).get(0).tagName; 	
 
 		return this.each(function() { 
 			/* Internal vars */
