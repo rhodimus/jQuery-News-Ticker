@@ -25,8 +25,9 @@
 		var tagType = $(this).get(0).tagName; 	
 
 		return this.each(function() { 
+
 			/* Internal vars */
-			var settings = {				
+			var settings = {
 				position: 0,
 				time: 0,
 				distance: 0,
@@ -48,6 +49,11 @@
 					playPauseID: '#play-pause'
 				}
 			};
+
+			/* Variables for refreshing ticker */
+			var secs=opts.refreshDelay-1;
+			var TimerRunning = false;
+			var firstRun = false;
 
 			// if we are not using a UL, display an error message and stop any further execution
 			if (tagType != 'UL' && tagType != 'OL' && opts.htmlFeed === true) {
@@ -203,8 +209,9 @@
 										debugError('Couldn\'t find any content from the XML feed for the ticker to use!');
 										return false;
 									}
-									setupContentAndTriggerDisplay();
+									
 									settings.contentLoaded = true;
+									setupContentAndTriggerDisplay();
 								}
 							});							
 						}
@@ -233,14 +240,12 @@
 			}
 
 			function setupContentAndTriggerDisplay() {
-
-				settings.contentLoaded = true;
-
+				
 				// update the ticker content with the correct item
 				// insert news content into DOM
 				$(settings.dom.titleElem).html(settings.newsArr['item-' + settings.position].type);
 				$(settings.dom.contentID).html(settings.newsArr['item-' + settings.position].content);
-
+				
 				// set the next content item to be used - loop round if we are at the end of the content
 				if (settings.position == (countSize(settings.newsArr) -1)) {
 					settings.position = 0;
@@ -287,10 +292,37 @@
 					return false;					
 				}
 			};
+			
+			// A countdown timer that decrements everytime the ticker goes through its list.
+			function startTimer() {
+				TimerRunning=true;
+				if(secs==0) {
+					secs = opts.refreshDelay; TimerRunning = false; firstRun = true;
+				}
+			    secs--;
+			}
+
+			// Either runs setupContentAndTriggerDisplay() or Restarts ticker with newly fetched data.
+			function display() {
+				if (settings.position == 0 && opts.refreshDelay != 0) { 
+					if (!this.TimerRunning) {
+						startTimer();
+						if (firstRun) {
+							firstRun=false; settings.contentLoaded = false; settings.position = 0; settings.newsArr = {}; processContent(); 
+						} else { 
+							setupContentAndTriggerDisplay();
+						} 
+					} else { 
+						setupContentAndTriggerDisplay();
+					} 
+				} else { 
+					setupContentAndTriggerDisplay();
+				}
+			}
 
 			// here we hide the current content and reset the ticker elements to a default state ready for the next ticker item
 			function postReveal() {				
-				if(settings.play) {		
+				if(settings.play) {
 					// we have to separately fade the content out here to get around an IE bug - needs further investigation
 					$(settings.dom.contentID).delay(opts.pauseOnItems).fadeOut(opts.fadeOutSpeed);
 					// deal with the rest of the content, prepare the DOM and trigger the next ticker
@@ -302,12 +334,12 @@
 								.end().find(settings.dom.tickerID + ',' + settings.dom.revealID)
 									.show()
 								.end().find(settings.dom.tickerID + ',' + settings.dom.revealID)
-									.removeAttr('style');								
-							setupContentAndTriggerDisplay();						
+									.removeAttr('style');
+									//needs to get data prior to fading out.
+									display();
 						});
 					}
 					else {
-						$(settings.dom.revealID).hide(0, function () {
 							$(settings.dom.contentID).fadeOut(opts.fadeOutSpeed, function () {
 								$(settings.dom.wrapperID)
 									.find(settings.dom.revealElem + ',' + settings.dom.contentID)
@@ -315,15 +347,18 @@
 									.end().find(settings.dom.tickerID + ',' + settings.dom.revealID)
 										.show()
 									.end().find(settings.dom.tickerID + ',' + settings.dom.revealID)
-										.removeAttr('style');								
-								setupContentAndTriggerDisplay();						
-							});
-						});	
-					}
+										.removeAttr('style');
+									//needs to get data prior to fading out.	
+									display();							
+							});	
+				    }
+				    
 				}
 				else {
 					$(settings.dom.revealElem).hide();
 				}
+				
+				
 			}
 
 			// pause ticker
@@ -392,6 +427,7 @@
 		direction: 'ltr',	
 		pauseOnItems: 3000,
 		fadeInSpeed: 600,
-		fadeOutSpeed: 300
+		fadeOutSpeed: 300,
+		refreshDelay: 0
 	};	
 })(jQuery);
