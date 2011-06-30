@@ -259,6 +259,7 @@
 
 			// slide back cover or fade in content
 			function revealContent() {
+				$(settings.dom.contentID).css('opacity', '1');
 				if(settings.play) {	
 					// get the width of the title element to offset the content and reveal
 					var offset = $(settings.dom.titleElem).width() + 20;
