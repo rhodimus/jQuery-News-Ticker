@@ -62,6 +62,7 @@
 				
 			<div id="release-history">
 				<div id="release-wrapper">
+					<p><strong>v1.7.1</strong> - 2011-05-29 - Added ability for ticker to reload content after X repeats.  Also cleaned up syntax errors on this page.</p>
 					<p><strong>v1.7</strong> - 2011-05-14 - Support for jQuery 1.6+</p>
 					<p><strong>v1.6</strong> - 2011-04-25 - Support for right-to-left languages, orders lists and a few bug fixes</p>
 					<p><strong>v1.5</strong> - 2011-02-23 - Various bug fixes</p>
@@ -141,7 +142,7 @@
 			
 			<pre><code>
 $(<span class="red">function</span> () {
-    $(<span class="red">'#js-news'</span>).ticker(
+    $(<span class="red">'#js-news'</span>).ticker({
         <span class="grey">speed</span>: <span class="red">0.10</span>,           <span class="grey">// The speed of the reveal</span>
         <span class="grey">ajaxFeed</span>: <span class="red">false</span>,       <span class="grey">// Populate jQuery News Ticker via a feed</span>
         <span class="grey">feedUrl</span>: <span class="red">false</span>,        <span class="grey">// The URL of the feed
@@ -156,8 +157,10 @@ $(<span class="red">function</span> () {
         <span class="grey">direction</span>: <span class="red">'ltr'</span>       <span class="grey">// Ticker direction - current options are 'ltr' or 'rtl'</span>
         <span class="grey">pauseOnItems</span>: <span class="red">2000</span>,    <span class="grey">// The pause on a news item before being replaced</span>
         <span class="grey">fadeInSpeed</span>: <span class="red">600</span>,      <span class="grey">// Speed of fade in animation</span>
-        <span class="grey">fadeOutSpeed</span>: <span class="red">300</span>      <span class="grey">// Speed of fade out animation</span>
-    );
+        <span class="grey">fadeOutSpeed</span>: <span class="red">300</span>,     <span class="grey">// Speed of fade out animation</span>
+	<span class="grey">repeatDelay</span>: <span class="red">0</span>         <span class="grey">// Refresh contents of feed after X repeats.
+		               // No refresh (0) as default.</span>
+    });
 });			
 			</code></pre>		
 		
