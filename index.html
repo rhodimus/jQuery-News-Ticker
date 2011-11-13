@@ -12,27 +12,28 @@
 </head>
 <body>
 	<h1>jQuery News Ticker</h1>
-	<div id="ticker-wrapper" class="no-js">
-		<ul id="js-news" class="js-hidden">
-			<li class="news-item">jQuery News Ticker now has support for right-to-left languages!</li>
+	<ul id="js-news" class="js-hidden">
+		<li class="news-item">jQuery News Ticker now has support for multiple tickers per page!</li>
+		<li class="news-item">jQuery News Ticker now has support for right-to-left languages!</li>
+		<li class="news-item">jQuery News Ticker now has support for loading content via an RSS feed!</li>
+		<li class="news-item">jQuery News Ticker now has an optional fade effect between items!</li>
+		<li class="news-item">New updates have been made to jQuery News Ticker! Check below for more details!</li>
+		<li class="news-item">jQuery News Ticker is now compatible with jQuery 1.3.2! See below for further details and for latest download.</li>
+		<li class="news-item">Further updates to jQuery News Ticker are coming soon!</li>
+	</ul>
+
+	<noscript>
+		<h2>Latest News</h2>
+		<ul id="no-js-news">
+			<li class="news-item">jQuery News Ticker now has support for multiple tickers per page!</li>
+			<li class="news-item">jQuery News Ticker now has support right-to-left languages!</li>
 			<li class="news-item">jQuery News Ticker now has support for loading content via an RSS feed!</li>
 			<li class="news-item">jQuery News Ticker now has an optional fade effect between items!</li>
 			<li class="news-item">New updates have been made to jQuery News Ticker! Check below for more details!</li>
 			<li class="news-item">jQuery News Ticker is now compatible with jQuery 1.3.2! See below for further details and for latest download.</li>
-			<li class="news-item">Further updates to jQuery News Ticker are coming soon!</li>
+			<li class="news-item">Further updates to jQuery News Ticker are coming soon, come back soon for more details.</li>
 		</ul>
-		<noscript>
-			<h2>Latest News</h2>
-			<ul id="no-js-news">
-				<li class="news-item">jQuery News Ticker now has support right-to-left languages!</li>
-				<li class="news-item">jQuery News Ticker now has support for loading content via an RSS feed!</li>
-				<li class="news-item">jQuery News Ticker now has an optional fade effect between items!</li>
-				<li class="news-item">New updates have been made to jQuery News Ticker! Check below for more details!</li>
-				<li class="news-item">jQuery News Ticker is now compatible with jQuery 1.3.2! See below for further details and for latest download.</li>
-				<li class="news-item">Further updates to jQuery News Ticker are coming soon, come back soon for more details.</li>
-			</ul>
-		</noscript>
-	</div>
+	</noscript>
 	
 	<div id="content">
 	
@@ -58,10 +59,11 @@
 				</a>
 			</div>
 			
-			<p>The latest version of jQuery News Ticker is v1.7 which was released on 14th May 2011 <a href="#release-history">(view release history)</a>.</p>
+			<p>The latest version of jQuery News Ticker is v1.8 which was released on 13th November 2011 <a href="#release-history">(view release history)</a>.</p>
 				
 			<div id="release-history">
 				<div id="release-wrapper">
+					<p><strong>v1.8</strong> - 2011-11-13 - Reduced amount of HTML needed, multiple tickers now possible, title positioning bug fixed</p>
 					<p><strong>v1.7</strong> - 2011-05-14 - Support for jQuery 1.6+</p>
 					<p><strong>v1.6</strong> - 2011-04-25 - Support for right-to-left languages, orders lists and a few bug fixes</p>
 					<p><strong>v1.5</strong> - 2011-02-23 - Various bug fixes</p>
@@ -95,14 +97,12 @@
 		
 			<p>Yes you do, all you need is the following HTML:</p>
 		
-			<pre><code>&lt;div <span class="grey">id</span>=<span class="red">&quot;ticker-wrapper&quot;</span> <span class="grey">class</span>=<span class="red">&quot;no-js&quot;</span>&gt;
-    &lt;ul <span class="grey">id</span>=<span class="red">&quot;js-news&quot;</span> <span class="grey">class</span>=<span class="red">&quot;js-hidden&quot;</span>&gt;
-        &lt;li <span class="grey">class</span>=<span class="red">&quot;news-item&quot;</span>&gt;&lt;a <span class="grey">href</span>=<span class="red">&quot;#&quot;</span>&gt;<span class="grey">This is the 1st latest news item.</span>&lt;/a&gt;&lt;/li&gt;
-        &lt;li <span class="grey">class</span>=<span class="red">&quot;news-item&quot;</span>&gt;&lt;a <span class="grey">href</span>=<span class="red">&quot;#&quot;</span>&gt;<span class="grey">This is the 2nd latest news item.</span>&lt;/a&gt;&lt;/li&gt;
-        &lt;li <span class="grey">class</span>=<span class="red">&quot;news-item&quot;</span>&gt;&lt;a <span class="grey">href</span>=<span class="red">&quot;#&quot;</span>&gt;<span class="grey">This is the 3rd latest news item.</span>&lt;/a&gt;&lt;/li&gt;
-        &lt;li <span class="grey">class</span>=<span class="red">&quot;news-item&quot;</span>&gt;&lt;a <span class="grey">href</span>=<span class="red">&quot;#&quot;</span>&gt;<span class="grey">This is the 4th latest news item.</span>&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/div&gt;</code></pre>	
+			<pre><code>&lt;ul <span class="grey">id</span>=<span class="red">&quot;js-news&quot;</span> <span class="grey">class</span>=<span class="red">&quot;js-hidden&quot;</span>&gt;
+    &lt;li <span class="grey">class</span>=<span class="red">&quot;news-item&quot;</span>&gt;&lt;a <span class="grey">href</span>=<span class="red">&quot;#&quot;</span>&gt;<span class="grey">This is the 1st latest news item.</span>&lt;/a&gt;&lt;/li&gt;
+    &lt;li <span class="grey">class</span>=<span class="red">&quot;news-item&quot;</span>&gt;&lt;a <span class="grey">href</span>=<span class="red">&quot;#&quot;</span>&gt;<span class="grey">This is the 2nd latest news item.</span>&lt;/a&gt;&lt;/li&gt;
+    &lt;li <span class="grey">class</span>=<span class="red">&quot;news-item&quot;</span>&gt;&lt;a <span class="grey">href</span>=<span class="red">&quot;#&quot;</span>&gt;<span class="grey">This is the 3rd latest news item.</span>&lt;/a&gt;&lt;/li&gt;
+    &lt;li <span class="grey">class</span>=<span class="red">&quot;news-item&quot;</span>&gt;&lt;a <span class="grey">href</span>=<span class="red">&quot;#&quot;</span>&gt;<span class="grey">This is the 4th latest news item.</span>&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre>	
 
 		<p>jQuery News Ticker will also work fine with an &lt;ol&gt; element to contain the news items.</p>
 	
@@ -202,7 +202,7 @@ $(<span class="red">function</span> () {
 		
 		<h2 class="divider-top">What about loading content from a feed?!</h2>
 		
-		<div class="content-box">
+		<div class="content-box divider-bottom">
 		
 			<p><del>Yeah, well the population of news items will be from HTML only for now I'm afraid...</del></p> 
 			
@@ -229,18 +229,6 @@ $(<span class="red">function</span> () {
 			
 			<p>Further support for loading new items from different feed sources will be coming in a future release, so stay tuned!</p>	
 		
-		</div>
-		
-		<h2>I'll be back for that! Is there anything else coming?</h2>
-		
-		<div class="content-box divider-bottom">
-		
-			<p>I'd like to make some improvements to the CSS for the ticker and support for JSONP requests (think Twitter feed).</p>
-			
-			<p>Simplifying the markup required to get the ticker to work, plus support for random news item display and on-the-fly content reloading are also on the todo list.</p>
-		
-			<p>And hopefully some more flexibility in options for the plugin and support for multiple tickers on one page.</p>
-	
 		</div>
 		
 		<h2 class="divider-top">Hey, this is really great work - how can I thank you?</h2>

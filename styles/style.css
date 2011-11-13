@@ -183,9 +183,9 @@ div#content {
 	display: block;
 	width: 216px;
 	height: 96px;
-	-webkit-box-shadow: 5px 5px 15px ;
-	-moz-box-shadow: 5px 5px 15px ;
-	box-shadow: 5px 5px 15px ; 
+	-webkit-box-shadow: 5px 5px 15px black;
+	-moz-box-shadow: 5px 5px 15px black;
+	box-shadow: 5px 5px 15px black; 
 }
 #download a {
  	font-family: 'LeagueGothicRegular', arial, san-serif;	
