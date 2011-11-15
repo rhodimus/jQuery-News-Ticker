@@ -177,7 +177,10 @@
                			}
                		});
 				}
-				setupContentAndTriggerDisplay();
+				// we may have to wait for the ajax call to finish here
+				if (!opts.ajaxFeed) {
+					setupContentAndTriggerDisplay();
+				}
 			}
 
 			/* Start to process the content for this ticker */
@@ -186,7 +189,7 @@
 				if (settings.contentLoaded == false) {
 					// construct content
 					if (opts.ajaxFeed) {
-						if (opts.feedType == 'xml') {
+						if (opts.feedType == 'xml') {							
 							$.ajax({
 								url: opts.feedUrl,
 								cache: false,
@@ -230,6 +233,7 @@
 										return false;
 									}
 									settings.contentLoaded = true;
+									setupContentAndTriggerDisplay();
 								}
 							});							
 						}
