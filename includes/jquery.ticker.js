@@ -250,7 +250,7 @@
 							    if(ind)
 							    {
 							        opts.feedType = "text";
-							        var delimiter = type.substr(0,ind);\
+							        var delimiter = type.substr(0,ind);
 							        success = function(data,settings) {
 							            data = data.split(delimiter)
 							            
