@@ -11,20 +11,31 @@
     You should have received a copy of the GNU General Public License
     along with jQuery News Ticker.  If not, see <http://www.gnu.org/licenses/>.
 */
-;(function ($) {  
-	$.fn.ticker = function (options) { 
+(function($){  
+	$.fn.ticker = function(options) { 
 		// Extend our default options with those provided.
 		// Note that the first arg to extend is an empty object -
 		// this is to keep from overriding our "defaults" object.
 		var opts = $.extend({}, $.fn.ticker.defaults, options); 
+
+		// check that the passed element is actually in the DOM
+		if ($(this).length == 0) {
+			if (window.console && window.console.log) {
+				window.console.log('Element does not exist in DOM!');
+			}
+			else {
+				alert('Element does not exist in DOM!');		
+			}
+			return false;
+		}
 		
 		/* Get the id of the UL to get our news content from */
 		var newsID = '#' + $(this).attr('id');
 
 		/* Get the tag type - we will check this later to makde sure it is a UL tag */
-		var tagType = $(this).get(0).tagName;
+		var tagType = $(this).get(0).tagName; 	
 
-		return this.each(function () { 
+		return this.each(function() { 
 			// get a unique id for this ticker
 			var uniqID = getUniqID();
 			
@@ -59,21 +70,21 @@
 			}
 
 			// set the ticker direction
-			opts.direction = (opts.direction == 'rtl' ? 'right' : 'left');
+			opts.direction == 'rtl' ? opts.direction = 'right' : opts.direction = 'left';
 			
 			// lets go...
 			initialisePage();
 			/* Function to get the size of an Object*/
 			function countSize(obj) {
-				var size = 0, key;
-				for (key in obj) {
-					if (obj.hasOwnProperty(key)) size++;
-				}
-				return size;
-			}
+			    var size = 0, key;
+			    for (key in obj) {
+			        if (obj.hasOwnProperty(key)) size++;
+			    }
+			    return size;
+			};
 
 			function getUniqID() {
-				var newDate = new Date();
+				var newDate = new Date;
 				return newDate.getTime();			
 			}
 			
@@ -101,7 +112,7 @@
 				$(settings.dom.wrapperID).children().remove();
 				
 				$(settings.dom.wrapperID).append('<div id="' + settings.dom.tickerID.replace('#', '') + '" class="ticker"><div id="' + settings.dom.titleID.replace('#', '') + '" class="ticker-title"><span><!-- --></span></div><p id="' + settings.dom.contentID.replace('#', '') + '" class="ticker-content"></p><div id="' + settings.dom.revealID.replace('#', '') + '" class="ticker-swipe"><span><!-- --></span></div></div>');
-				$(settings.dom.wrapperID).removeClass('no-js').addClass('ticker-wrapper has-js ' + opts.direction + ' ' + opts.displayType);
+				$(settings.dom.wrapperID).removeClass('no-js').addClass('ticker-wrapper has-js ' + opts.direction);
 				// hide the ticker
 				$(settings.dom.tickerElem + ',' + settings.dom.contentID).hide();
 				// add the controls to the DOM if required
@@ -125,7 +136,7 @@
 									break;
 								case settings.dom.playPauseID.replace('#', ''):
 									// play or pause the ticker
-									if (settings.play === true) {
+									if (settings.play == true) {
 										settings.paused = true;
 										$(settings.dom.playPauseID).addClass('paused');
 										pauseTicker();
@@ -155,16 +166,16 @@
 					$(settings.dom.wrapperID).append('<ul id="' + settings.dom.controlsID.replace('#', '') + '" class="ticker-controls"><li id="' + settings.dom.playPauseID.replace('#', '') + '" class="jnt-play-pause controls"><a href=""><!-- --></a></li><li id="' + settings.dom.prevID.replace('#', '') + '" class="jnt-prev controls"><a href=""><!-- --></a></li><li id="' + settings.dom.nextID.replace('#', '') + '" class="jnt-next controls"><a href=""><!-- --></a></li></ul>');
 				}
 				if (opts.displayType != 'fade') {
-					// add mouse over on the content
-					$(settings.dom.contentID).mouseover(function () {
-						if (settings.paused === false) {
-							pauseTicker();
-						}
-					}).mouseout(function () {
-						if (settings.paused === false) {
-							restartTicker();
-						}
-					});
+                	// add mouse over on the content
+               		$(settings.dom.contentID).mouseover(function () {
+               			if (settings.paused == false) {
+               				pauseTicker();
+               			}
+               		}).mouseout(function () {
+               			if (settings.paused == false) {
+               				restartTicker();
+               			}
+               		});
 				}
 				// we may have to wait for the ajax call to finish here
 				if (!opts.ajaxFeed) {
@@ -175,7 +186,7 @@
 			/* Start to process the content for this ticker */
 			function processContent() {
 				// check to see if we need to load content
-				if (settings.contentLoaded === false) {
+				if (settings.contentLoaded == false) {
 					// construct content
 					if (opts.ajaxFeed) {
 						if (opts.feedType == 'xml') {							
@@ -185,11 +196,8 @@
 								dataType: opts.feedType,
 								async: true,
 								success: function(data){
-									var count = 0;	
+									count = 0;	
 									// get the 'root' node
-									var xmlContent;
-									var xmlChannel;
-										var xmlItems;
 									for (var a = 0; a < data.childNodes.length; a++) {
 										if (data.childNodes[a].nodeName == 'rss') {
 											xmlContent = data.childNodes[a];
@@ -207,17 +215,14 @@
 											xmlItems = xmlChannel.childNodes[x];
 											var title, link = false;
 											for (var y = 0; y < xmlItems.childNodes.length; y++) {
-												if (xmlItems.childNodes[y].nodeName == 'title') {
+												if (xmlItems.childNodes[y].nodeName == 'title') {      												    
 													title = xmlItems.childNodes[y].lastChild.nodeValue;
 												}
-												else if (xmlItems.childNodes[y].nodeName == 'link') {
+												else if (xmlItems.childNodes[y].nodeName == 'link') {												    
 													link = xmlItems.childNodes[y].lastChild.nodeValue; 
 												}
-												if ((title !== false && title !== '') && link !== false) {
-													settings.newsArr['item-' + count] = { type: opts.titleText, content: '<a href="' + link + '">' + title + '</a>' };
-													count++;
-													title = false;
-													link = false;
+												if ((title !== false && title != '') && link !== false) {
+												    settings.newsArr['item-' + count] = { type: opts.titleText, content: '<a href="' + link + '">' + title + '</a>' };												    count++;												    title = false;												    link = false;
 												}
 											}	
 										}		
@@ -241,8 +246,6 @@
 							$(newsID + ' LI').each(function (i) {
 								// maybe this could be one whole object and not an array of objects?
 								settings.newsArr['item-' + i] = { type: opts.titleText, content: $(this).html()};
-								//console.log($(this).html());
-								//console.log(i);
 							});		
 						}	
 						else {
@@ -258,62 +261,25 @@
 			}
 
 			function setupContentAndTriggerDisplay() {
-				//console.log('hi');
-				
+
 				settings.contentLoaded = true;
-				
-				if (opts.displayType == 'scroll') {
-					// get the current width of the ticker
-					var tickerWidth = $(settings.dom.wrapperID).width();
-					// fill content to a greater than the width of the ticker
-					var contentWidth = 0;
-					var count = 1;
-					while (tickerWidth > contentWidth) {
-						$(settings.dom.contentID).append(settings.newsArr['item-' + settings.position].content).css('visbility', 'hidden');
-						// set the next content item to be used - loop round if we are at the end of the content
-						if (settings.position == (countSize(settings.newsArr) - 1)) {
-							settings.position = 0;
-							count++;
-						}
-						else {		
-							settings.position++;
-						}
-						contentWidth = contentWidth + $(settings.dom.contentID).width();
-					}
-					// empty the content 
-					$(settings.dom.revealID).hide();
-					$(settings.dom.contentID).html('').css('width', (contentWidth * 3) + 'px');
-					// add elements to page to fill space
-					for (var x = 0; x < count; x++) {
-						// add every news item 
-						for (var y = 0; y < countSize(settings.newsArr); y++) {
-							$(settings.dom.contentID).append('<span class="ticker-content-span">' + settings.newsArr['item-' + y].content + '</span>');
-						}
-					}
-					$(settings.dom.contentID + ' span').each(function () {
-						
-					});
-					// set speed
-					time = 1;
-				}
-				else {
-					// update the ticker content with the correct item
-					// insert news content into DOM
-					$(settings.dom.titleElem).html(settings.newsArr['item-' + settings.position].type);
-					$(settings.dom.contentID).html(settings.newsArr['item-' + settings.position].content);
 
-					// set the next content item to be used - loop round if we are at the end of the content
-					if (settings.position == (countSize(settings.newsArr) - 1)) {
-						settings.position = 0;
-					}
-					else {		
-						settings.position++;
-					}			
+				// update the ticker content with the correct item
+				// insert news content into DOM
+				$(settings.dom.titleElem).html(settings.newsArr['item-' + settings.position].type);
+				$(settings.dom.contentID).html(settings.newsArr['item-' + settings.position].content);
 
-					// get the values of content and set the time of the reveal (so all reveals have the same speed regardless of content size)
-					distance = $(settings.dom.contentID).width();
-					time = distance / opts.speed;
+				// set the next content item to be used - loop round if we are at the end of the content
+				if (settings.position == (countSize(settings.newsArr) -1)) {
+					settings.position = 0;
 				}
+				else {		
+					settings.position++;
+				}			
+
+				// get the values of content and set the time of the reveal (so all reveals have the same speed regardless of content size)
+				distance = $(settings.dom.contentID).width();
+				time = distance / opts.speed;
 
 				// start the ticker animation						
 				revealContent();		
@@ -336,23 +302,6 @@
 					}
 					else if (opts.displayType == 'scroll') {
 						// to code
-						//console.log('yo');
-						if (opts.direction == 'right') {
-							margin = $(settings.dom.contentID).css('margin-right');
-							//console.log(margin);
-							margin = margin.replace('px', '') - 1000;
-							animationAction = { marginRight : margin + 'px' };
-						}
-						else {
-							margin = $(settings.dom.contentID).css('margin-left');
-							//console.log(margin);
-							margin = margin.replace('px', '') - 1000;
-							animationAction = { marginLeft : margin + 'px' };
-						}
-						//console.log(animationAction);
-						//var margin = $(settings.dom.contentID).css();
-						//animationAction = opts.direction == 'right' ? { marginRight: '-1000px'} : { marginLeft: '-1000px' };
-						$(settings.dom.contentID).fadeIn(opts.fadeInSpeed).animate(animationAction, 16000, 'linear', revealContent);
 					}
 					else {
 						// default bbc scroll effect
@@ -367,7 +316,7 @@
 				else {
 					return false;					
 				}
-			}
+			};
 
 			// here we hide the current content and reset the ticker elements to a default state ready for the next ticker item
 			function postReveal() {				
@@ -431,7 +380,7 @@
 				pauseTicker();
 				switch (direction) {
 					case 'prev':
-						if (settings.position === 0) {
+						if (settings.position == 0) {
 							settings.position = countSize(settings.newsArr) -2;
 						}
 						else if (settings.position == 1) {
