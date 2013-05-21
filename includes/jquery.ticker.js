@@ -189,57 +189,76 @@
 				if (settings.contentLoaded == false) {
 					// construct content
 					if (opts.ajaxFeed) {
-						if (opts.feedType == 'xml') {							
-							$.ajax({
-								url: opts.feedUrl,
-								cache: false,
-								dataType: opts.feedType,
-								async: true,
-								success: function(data){
-									count = 0;	
-									// get the 'root' node
-									for (var a = 0; a < data.childNodes.length; a++) {
-										if (data.childNodes[a].nodeName == 'rss') {
-											xmlContent = data.childNodes[a];
+						switch(opts.feedType){
+							case 'xml':
+								$.ajax({
+									url: opts.feedUrl,
+									cache: false,
+									dataType: opts.feedType,
+									async: true,
+									success: function(data){
+										count = 0;	
+										// get the 'root' node
+										for (var a = 0; a < data.childNodes.length; a++) {
+											if (data.childNodes[a].nodeName == 'rss') {
+												xmlContent = data.childNodes[a];
+											}
 										}
+										// find the channel node
+										for (var i = 0; i < xmlContent.childNodes.length; i++) {
+											if (xmlContent.childNodes[i].nodeName == 'channel') {
+												xmlChannel = xmlContent.childNodes[i];
+											}		
+										}
+										// for each item create a link and add the article title as the link text
+										for (var x = 0; x < xmlChannel.childNodes.length; x++) {
+											if (xmlChannel.childNodes[x].nodeName == 'item') {
+												xmlItems = xmlChannel.childNodes[x];
+												var title, link = false;
+												for (var y = 0; y < xmlItems.childNodes.length; y++) {
+													if (xmlItems.childNodes[y].nodeName == 'title') {      												    
+														title = xmlItems.childNodes[y].lastChild.nodeValue;
+													}
+													else if (xmlItems.childNodes[y].nodeName == 'link') {												    
+														link = xmlItems.childNodes[y].lastChild.nodeValue; 
+													}
+													if ((title !== false && title != '') && link !== false) {
+														settings.newsArr['item-' + count] = { type: opts.titleText, content: '<a href="' + link + '">' + title + '</a>' };												    count++;												    title = false;												    link = false;
+													}
+												}	
+											}		
+										}			
+										// quick check here to see if we actually have any content - log error if not
+										if (countSize(settings.newsArr < 1)) {
+											debugError('Couldn\'t find any content from the XML feed for the ticker to use!');
+											return false;
+										}
+										settings.contentLoaded = true;
+										setupContentAndTriggerDisplay();
 									}
-									// find the channel node
-									for (var i = 0; i < xmlContent.childNodes.length; i++) {
-										if (xmlContent.childNodes[i].nodeName == 'channel') {
-											xmlChannel = xmlContent.childNodes[i];
-										}		
-									}
-									// for each item create a link and add the article title as the link text
-									for (var x = 0; x < xmlChannel.childNodes.length; x++) {
-										if (xmlChannel.childNodes[x].nodeName == 'item') {
-											xmlItems = xmlChannel.childNodes[x];
-											var title, link = false;
-											for (var y = 0; y < xmlItems.childNodes.length; y++) {
-												if (xmlItems.childNodes[y].nodeName == 'title') {      												    
-													title = xmlItems.childNodes[y].lastChild.nodeValue;
-												}
-												else if (xmlItems.childNodes[y].nodeName == 'link') {												    
-													link = xmlItems.childNodes[y].lastChild.nodeValue; 
-												}
-												if ((title !== false && title != '') && link !== false) {
-												    settings.newsArr['item-' + count] = { type: opts.titleText, content: '<a href="' + link + '">' + title + '</a>' };												    count++;												    title = false;												    link = false;
-												}
-											}	
-										}		
-									}			
-									// quick check here to see if we actually have any content - log error if not
-									if (countSize(settings.newsArr < 1)) {
-										debugError('Couldn\'t find any content from the XML feed for the ticker to use!');
+								});							
+								break;
+							case 'json':
+								$.getJSON(opts.feedUrl,function(data){
+									count = 0;
+									$.each(data,function(key,val){
+										var link = val.link;
+										var title = val.title;
+										settings.newsArr['item-' + count] = {type: opts.titleText, content: '<a href="' + link + '">' + title + '</a>'};
+										count++;
+									});
+									if (countSize(settings.newsArr < 1)){
+										debugError('Couldn\'t find any content from the JSON feed for the ticker to use!');
 										return false;
 									}
 									settings.contentLoaded = true;
 									setupContentAndTriggerDisplay();
-								}
-							});							
+								});
+								break;
+							default:
+								debugError('Code Me!');	
+								break;
 						}
-						else {
-							debugError('Code Me!');	
-						}						
 					}
 					else if (opts.htmlFeed) { 
 						if($(newsID + ' LI').length > 0) {
