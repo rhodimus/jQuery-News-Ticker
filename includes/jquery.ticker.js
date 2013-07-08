@@ -221,10 +221,13 @@
 												else if (xmlItems.childNodes[y].nodeName == 'link') {												    
 													link = xmlItems.childNodes[y].lastChild.nodeValue; 
 												}
-												if ((title !== false && title != '') && link !== false) {
-												    settings.newsArr['item-' + count] = { type: opts.titleText, content: '<a href="' + link + '">' + title + '</a>' };												    count++;												    title = false;												    link = false;
-												}
 											}	
+											if ((title !== false && title != '') && link !== false) {
+												settings.newsArr['item-' + count] = { type: opts.titleText, content: '<a href="' + link + '">' + title + '</a>' };
+												count++;
+												title = false;
+												link = false;
+											}
 										}		
 									}			
 									// quick check here to see if we actually have any content - log error if not
