@@ -290,7 +290,7 @@
 				$(settings.dom.contentID).css('opacity', '1');
 				if(settings.play) {	
 					// get the width of the title element to offset the content and reveal	
-					var offset = $(settings.dom.titleID).width() + 20;
+					var offset = ($(settings.dom.titleID).width() != '0') ? $(settings.dom.titleID).width() + 20 : 0;
 	
 					$(settings.dom.revealID).css(opts.direction, offset + 'px');
 					// show the reveal element and start the animation
