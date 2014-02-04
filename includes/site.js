@@ -1,5 +1,19 @@
 $(function () {
      // start the ticker 
+     /*
+	$('#js-news').ticker({	
+		ajaxFeed: true,
+		feedUrl: 'testdelim.txt',
+		feedType: '\n-delim',
+		debugMode: true});
+	*/
+	/*
+	$('#js-news').ticker({	
+		ajaxFeed: true,
+		feedUrl: 'testjson.txt',
+		feedType: 'json',
+		debugMode: true});
+	*/
 	$('#js-news').ticker();
 	
 	// hide the release history when the page loads
