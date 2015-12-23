@@ -222,6 +222,9 @@
 													link = xmlItems.childNodes[y].lastChild.nodeValue; 
 												}
 												if ((title !== false && title != '') && link !== false) {
+													if (opts.newsContentModiffier) {
+														title = opts.newsContentModiffier(title);
+													}
 												    settings.newsArr['item-' + count] = { type: opts.titleText, content: '<a href="' + link + '">' + title + '</a>' };												    count++;												    title = false;												    link = false;
 												}
 											}	
