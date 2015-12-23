@@ -234,6 +234,9 @@
 									}
 									settings.contentLoaded = true;
 									setupContentAndTriggerDisplay();
+									if (opts.ajaxFeedCallSuccess) {
+										opts.ajaxFeedCallSuccess(data);
+									}
 								}
 							});							
 						}
