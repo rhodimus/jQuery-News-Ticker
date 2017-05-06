@@ -32,7 +32,7 @@
 		/* Get the id of the UL to get our news content from */
 		var newsID = '#' + $(this).attr('id');
 
-		/* Get the tag type - we will check this later to makde sure it is a UL tag */
+		/* Get the tag type - we will check this later to make sure it is a UL tag */
 		var tagType = $(this).get(0).tagName; 	
 
 		return this.each(function() { 
@@ -115,8 +115,7 @@
 				
 				$(settings.dom.wrapperID).append('<div id="' + settings.dom.tickerID.replace('#', '') + '" class="ticker"><div id="' + settings.dom.titleID.replace('#', '') + '" class="ticker-title"><span><!-- --></span></div><p id="' + settings.dom.contentID.replace('#', '') + '" class="ticker-content"></p><div id="' + settings.dom.revealID.replace('#', '') + '" class="ticker-swipe"><span><!-- --></span></div></div>');
 				$(settings.dom.wrapperID).removeClass('no-js').addClass('ticker-wrapper has-js ' + opts.direction);
-				// hide the ticker
-				$(settings.dom.tickerElem + ',' + settings.dom.contentID).hide();
+
 				// add the controls to the DOM if required
 				if (opts.controls) {
 					// add related events - set functions to run on given event
@@ -237,13 +236,16 @@
 										}
 										settings.contentLoaded = true;
 										setupContentAndTriggerDisplay();
+									},
+									error: function(data){
+										debugError('Ajax call failed!');
 									}
 								});
 								break;
 							case 'json':
-								$.getJSON(opts.feedUrl,function(jsondata){
+								$.getJSON(opts.feedUrl, function(data){
 									var count = 0;
-									$.each(jsondata,function(key,val){
+									$.each(data,function(key,val){
 										settings.newsArr['item-' + count] = {type: opts.titleText, content: val};
 										count++;
 									});
@@ -254,7 +256,10 @@
 									}
 									settings.contentLoaded = true;
 									setupContentAndTriggerDisplay();
-								});
+								})
+									.fail(function() {
+										debugError('JSON call failed!');
+									});
 								break;
 							default:
 								debugError('Invalid Ajax Feed Type!');
@@ -295,18 +300,14 @@
 					else {settings.position++}
 				}
 				else if (opts.order === 'random') {
-                    // select random position that is different then the previous one and set as previous for next iteration
-                    do {settings.position = Math.floor(Math.random()*countSize(settings.newsArr))} while (settings.position === settings.prevPosition);
-                    settings.prevPosition = settings.position;
-                }
-                else {
-                    debugError('Need to choose a valid order type.');
-                    return false;
-                }
-
-				// get the values of content and set the time of the reveal (so all reveals have the same speed regardless of content size)
-				distance = $(settings.dom.contentID).width();
-				time = distance / opts.speed;
+					// select random position that is different then the previous one, then set as previous for next iteration
+					do {settings.position = Math.floor(Math.random()*countSize(settings.newsArr))} while (settings.position === settings.prevPosition);
+					settings.prevPosition = settings.position;
+				}
+				else {
+					debugError('Need to choose a valid order type.');
+					return false;
+				}
 
 				// start the ticker animation						
 				revealContent();
@@ -314,6 +315,11 @@
 
 			// slide back cover or fade in content
 			function revealContent() {
+
+				// get the values of content and set the time of the reveal (so all reveals have the same speed regardless of content size)
+				var distance = $(settings.dom.contentID).width();
+				var time = distance / opts.speed;
+
 				$(settings.dom.contentID).css('opacity', '1');
 				if(settings.play) {	
 					// get the width of the title element to offset the content and reveal	
