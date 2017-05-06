@@ -237,33 +237,48 @@
 										settings.contentLoaded = true;
 										setupContentAndTriggerDisplay();
 									},
-									error: function(data){
+									error: function(){
 										debugError('Ajax call failed!');
 									}
 								});
 								break;
 							case 'json':
-								$.getJSON(opts.feedUrl, function(data){
-									var count = 0;
-									$.each(data,function(key,val){
-										settings.newsArr['item-' + count] = {type: opts.titleText, content: val};
-										count++;
-									});
-									// check to see if we actually have any content - log error if not
-									if (countSize(settings.newsArr) < 1){
-										debugError('Couldn\'t find any content from the JSON feed for the ticker to use!');
-										return false;
-									}
-									settings.contentLoaded = true;
-									setupContentAndTriggerDisplay();
-								})
-									.fail(function() {
-										debugError('JSON call failed!');
-									});
+								switch(opts.jsonType){
+									case 'array':
+										$.getJSON(opts.feedUrl, function(data){
+											var count = 0;
+											switch (opts.jsonType) {
+												case 'array':
+													$.each(data,function(key,val){
+														settings.newsArr['item-' + count] = {type: opts.titleText, content: val};
+														count++;
+													});
+													break;
+												case 'object':
+													$.each(data[opts.jsonObjKey],function(key,val){
+														settings.newsArr['item-' + count] = {type: opts.titleText, content: val};
+														count++;
+													});
+													break;
+												default:
+													debugError('JSON has been enabled but a valid JSON type has not been selected. Please check the ticker settings.');
+													return false;
+											}
+											// check to see if we actually have any content - log error if not
+											if (countSize(settings.newsArr) < 1){
+												debugError('Couldn\'t find any content from the JSON feed for the ticker to use!');
+												return false;
+											}
+											settings.contentLoaded = true;
+											setupContentAndTriggerDisplay();
+										})
+											.fail(function() {
+												debugError('JSON call failed!');
+											});
+								}
 								break;
 							default:
 								debugError('Invalid Ajax Feed Type!');
-								break;
 						}
 					}
 					else if (opts.htmlFeed) { 
@@ -442,18 +457,20 @@
 	// plugin defaults - added as a property on our plugin function
 	$.fn.ticker.defaults = {
 		speed: 0.10,
+		htmlFeed: true,
 		ajaxFeed: false,
 		feedUrl: '',
 		feedType: 'xml',
-		displayType: 'reveal',
-		htmlFeed: true,
-		order: 'sequential',
-		debugMode: true,
-		controls: true,
+		jsonType: null,
+		jsonObjKey: null,
 		titleText: 'Latest',
-		direction: 'ltr',	
+		order: 'sequential',
+		direction: 'ltr',
+		displayType: 'reveal',
 		pauseOnItems: 3000,
 		fadeInSpeed: 600,
-		fadeOutSpeed: 300
+		fadeOutSpeed: 300,
+		controls: true,
+		debugMode: true
 	};
 })(jQuery);
