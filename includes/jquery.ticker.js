@@ -338,7 +338,7 @@
 				$(settings.dom.contentID).css('opacity', '1');
 				if(settings.play) {	
 					// get the width of the title element to offset the content and reveal	
-					var offset = $(settings.dom.titleID).width() + 20;
+					var offset = $(settings.dom.titleID).width() + settings.offset;
 	
 					$(settings.dom.revealID).css(opts.direction, offset + 'px');
 					// show the reveal element and start the animation
@@ -468,6 +468,7 @@
 		direction: 'ltr',
 		displayType: 'reveal',
 		pauseOnItems: 3000,
+		offset: 20,
 		fadeInSpeed: 600,
 		fadeOutSpeed: 300,
 		controls: true,
